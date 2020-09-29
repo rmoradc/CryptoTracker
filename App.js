@@ -1,21 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { ThemeContextProvider } from './context/ThemeContext';
+import { PeriodContextProvider } from './context/PeriodContext';
+import { SearchContextProvider } from './context/SearchContext';
+import HomeStack from './routes/HomeStack'; 
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'RawlineMedium': require('./assets/fonts/rawline-500.ttf'),
+    'RawlineSemiBold': require('./assets/fonts/rawline-600.ttf'),
+  });
+};
 
 export default function App() {
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  if(!dataLoaded) {
+    return (
+      <AppLoading 
+        startAsync={fetchFonts}
+        onFinish={() => setDataLoaded(true)}
+      />
+    );
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeContextProvider>
+      <PeriodContextProvider>
+        <SearchContextProvider>
+          <HomeStack />
+        </SearchContextProvider>
+      </PeriodContextProvider>
+    </ThemeContextProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
