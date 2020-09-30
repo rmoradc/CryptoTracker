@@ -6,3 +6,6 @@ Clone the repo then run `npm install` in ./Cryptotracker.
 
 # Running the code
 Run `npm start`. The Expo devtools will open, use your device to scan the QR code, or select to run in an emulator if it is set up.
+
+## Changing Theme
+The theme can be changed by tapping on the 'Tracker' title on the main page.
